@@ -1,0 +1,15 @@
+.form-item {
+    width: 100%;
+    display: block;
+}
+
+footer {
+    text-align: center;
+}
+.admin-table {
+    width: 100%;
+    margin: 30px;
+}
+.article {
+    margin-top: 30px;
+}
