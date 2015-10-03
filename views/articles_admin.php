@@ -21,13 +21,15 @@
         echo "Статей нет. <br>Для добавления нажмите 'Добавить статью'.";
         else {
         ?>
-        <table class="admin-table">
+        <table class="table table-hover">
 
             <thead>
+            <tr>
                 <th>Дата</th>
                 <th>Заголовок</th>
-                <th></th>
-                <th></th>
+                <th>#</th>
+                <th>#</th>
+            </tr>
             </thead>
 
             <tbody>

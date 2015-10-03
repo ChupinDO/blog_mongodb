@@ -4,13 +4,14 @@
     <title>Блог Даниила Чупина</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="styles/style.css">
 
     <script type="text/javascript" src="models/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="models/script.js"></script>
 </head>
 <body>
 <div class="container">
+
     <h1>Блог Даниила Чупина</h1>
     <a href="admin"><h3>Панель администратора</h3></a>
     <ol class="breadcrumb">
