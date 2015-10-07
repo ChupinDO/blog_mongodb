@@ -9,3 +9,6 @@ footer {
 .article {
     margin-top: 30px;
 }
+.right {
+    float: right;
+}

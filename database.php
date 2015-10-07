@@ -6,6 +6,9 @@
  * Time: 16:19
  */
 
+/**
+ * @return MongoClient
+ */
 function db_connect() {
     try {
         $link = new MongoClient();
