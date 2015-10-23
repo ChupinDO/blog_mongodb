@@ -6,15 +6,19 @@
  * Time: 16:30
  */
 
-require_once("database.php");
-require_once("models/articles.php");
+require_once("DBClient.php");
+require_once("models/ArticlesCollection.php");
 
-$link = db_connect();
+$link = DBClient::connect();
 
-$articles = articles_get_all($link);
+$articles_collection = new ArticlesCollection($link);
+
+$articles = $articles_collection->get_all();
+
+$articles = array_reverse($articles, true);
 
 $count = count($articles);
 
-db_close_connection($link);
+DBClient::close($link);
 
 include("views/articles.php");

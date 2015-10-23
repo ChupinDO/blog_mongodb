@@ -5,9 +5,9 @@ session_start();
 //точка входа для процедуры авторизации
 
 //класс для работы с базой данных
-require_once("../database.php");
+require_once("../DBClient.php");
 //класс для работы с пользователями
-require_once("../models/users.php");
+require_once("../models/UsersCollection.php");
 
 //TODO подумать над тем, чтобы объединить скрипты авторизации и регистрации и обрабатывать данные через различные action
 
@@ -30,7 +30,9 @@ if (empty($_POST)) {
     //если никаких данных не передано - подгружаем view
     include("../views/authorization.php");
 } else {
-    $link = db_connect();
+    $link = DBClient::connect();
+
+    $users_collection = new UsersCollection($link);
 
     //TODO обработка входных данных
 
@@ -38,9 +40,9 @@ if (empty($_POST)) {
     $login = mb_strtolower($_POST["login"]);
 
     //проверяем входные данные
-    if (check_password($link, $login, $_POST["password"])) {
+    if ($users_collection->check_password($login, $_POST["password"])) {
         //получаем запись данного пользователя
-        $user = get_user($link, $login);
+        $user = $users_collection->get_one($login);
 
         //записываем в сессию нужные данные
         //TODO подумать нужно ли таскать другие данные + инкапсулировать в метод user_enter?
@@ -63,5 +65,5 @@ if (empty($_POST)) {
         header('refresh: 5; url=index.php');
     }
     //закрываем соединение с базой
-    db_close_connection($link);
+    DBClient::close($link);
 }

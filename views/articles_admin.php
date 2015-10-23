@@ -8,7 +8,11 @@
 </head>
 <body>
 <div class="container">
-    <h1>Блог Даниила Чупина</h1>
+
+    <div class="page-header">
+        <h1>Блог Даниила Чупина</h1>
+    </div>
+
     <h3>Панель администратора</h3>
     <ol class="breadcrumb">
         <li><a href="../index.php">Главная страница</a></li>

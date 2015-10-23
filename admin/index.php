@@ -6,10 +6,12 @@
  * Time: 14:03
  */
 
-require_once("../database.php");
-require_once("../models/articles.php");
+require_once("../DBClient.php");
+require_once("../models/ArticlesCollection.php");
 
-$link = db_connect();
+$link = DBClient::connect();
+
+$articles_collection = new ArticlesCollection($link);
 
 //проверка, установлен ли параметр action
 if (isset($_GET["action"])) {
@@ -22,7 +24,8 @@ switch ($action) {
     case "add": {
         if (!empty($_POST)) {
             $article = ["date" => $_POST["date"], "title" => $_POST["title"], "content" => $_POST["content"]];
-            article_add($link, $article);
+
+            $articles_collection->add($article);
 
             header("Location: index.php");
         }
@@ -36,7 +39,7 @@ switch ($action) {
         //получаем параметр id
         $id = $_GET["id"];
         //удаляем статью из базы
-        article_delete($link, $id);
+        $articles_collection->delete($id);
 
         //перенаправляем браузер на index.php
         header("Location: index.php");
@@ -53,12 +56,13 @@ switch ($action) {
                 "title" => $_POST["title"],
                 "content" => $_POST["content"]
             ];
-            article_edit($link, $id, $new_article);
+
+            $articles_collection->edit($id, $new_article);
 
             header("Location: index.php");
         }
 
-        $article = article_get_one($link, $id);
+        $article = $articles_collection->get_one($id);
 
         include("../views/article_admin.php");
 
@@ -66,13 +70,13 @@ switch ($action) {
     }
 
     default: {
-        $articles = articles_get_all($link);
+        $articles = $articles_collection->get_all();
 
         include("../views/articles_admin.php");
     }
 }
 
 //в завершении любой операции закрывам соединение
-db_close_connection($link);
+DBClient::close($link);
 
 

@@ -9,9 +9,9 @@
 //точка входа для процедуры регистрации
 
 //класс для работы с базой данных
-require_once("../database.php");
+require_once("../DBClient.php");
 //класс для работы с пользователями
-require_once("../models/users.php");
+require_once("../models/UsersCollection.php");
 
 if (empty($_POST)) {
     //если никаких данных не передано - подгружаем view
@@ -29,10 +29,16 @@ if (empty($_POST)) {
     if( is_user_contain($link, $login) ) {
         echo "Извините, введенный вами логин уже зарегистрирован. Введите другой логин. <br>";
         echo "Вы будете перенаправлены на страницу регистрации через 5 секунд.";
+
         //перенаправляем на страницу регистрации через 5 секунд
         header('refresh: 5; url=index.php');
+
     } else {
-        add_user($link, $_POST["firstname"], $_POST["lastname"], $login, $_POST["password"]);
+        //шифрование пароля
+        $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+        add_user($link, $_POST["firstname"], $_POST["lastname"], $login, $password, $_POST["email"]);
+
         echo "Вы успешно зарегистрированы! <br>";
         echo "Вы будете перенаправлены на главную страницу через 5 секунд.";
         header('refresh: 5; url=../index.php');
